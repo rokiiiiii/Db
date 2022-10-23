@@ -1,0 +1,56 @@
+drop database if exists shoos;
+create database if not exists shoos;
+use shoos;
+
+
+create table shoeСategories(
+#categoryId int primary key NOT NULL AUTO_INCREMENT,
+categoryName varchar(50) primary key,
+guaranteePeriod int,
+careRules varchar(50),
+imgPath varchar(50),
+imgName varchar(10000),
+dostyp varchar(50) check (dostyp="Есть" or dostyp="Нету")
+);
+
+create table goods(
+#goodsId int primary key NOT NULL AUTO_INCREMENT,
+goodsName varchar(50) primary key,
+categoryName varchar(50) references shoeCategories(categoryName) on update cascade on delete cascade,
+#categoryId int ,
+producer varchar(50),
+material varchar(50),
+color varchar(50),
+price int,
+quantityInStock int,
+dostyp varchar(50) check(dostyp="Есть" or dostyp="Нету")
+);
+
+create table sales(
+saleId int primary key NOT NULL AUTO_INCREMENT,
+#goodsId int ,
+goodsName varchar(50) references goods(goodsName) on update cascade on delete cascade, 
+size int,
+count int,
+discount int,
+saleDate datetime
+);
+
+insert into shoeСategories(categoryName,guaranteePeriod,careRules,imgPath,imgName,dostyp) values
+									('Кате1', '12', 'Правила1','Force.jpg','Force.jpg',"Есть"),
+									( 'Категория2', '6', 'Правила2','Force.jpg','Force.jpg',"Есть"),
+                                    ( 'Категория3', '0', 'Правила3','Force.jpg','Force.jpg',"Есть");
+select * from shoeСategories;
+                                   
+insert into goods(goodsName, categoryName,producer,material,color,price,quantityInStock,dostyp) values
+						( 'Обувь1','Кате1',  'Производитель1', 'Материал1', 'Синий', '100', '10',"Есть"),
+                        ( 'Обувь4', 'Категория2',  'Производитель4', 'Материал4', 'Белый', '100', '20',"Есть"),
+                        ( 'Обувь3', 'Категория3',  'Производитель3', 'Материал3', 'Чёрный', '50', '201',"Есть");
+select * from goods;
+                       
+insert into sales(goodsName,size,count,discount,saleDate) values
+						(  'Обувь1', '31', '1' , '10', '2022-04-12 '),
+						(  'Обувь4', '40', '1' , '0', '2022-05-14'),
+                        ( 'Обувь3', '40', '11' , '0', '2022-05-28');
+					
+select * from sales;
