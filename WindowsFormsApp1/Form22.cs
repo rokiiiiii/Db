@@ -112,14 +112,13 @@ namespace WindowsFormsApp1
 
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
-                MySqlCommand command = new MySqlCommand($"UPDATE `goods` SET `dostyp`= 'Нету' WHERE `goodsName` = @uL", db.getConnection());
+                MySqlCommand command = new MySqlCommand($"Delete from `goods` WHERE `goodsName` = @uL", db.getConnection());
                 command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1.Text;
                 db.openConnection();
-                adapter.SelectCommand = command;
-                adapter.Fill(table);
+               
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    MessageBox.Show("Удалили запись", "Выполнено");
+                    MessageBox.Show("Вы успешно удалили запись", "Выполнено");
                     this.Hide();
                     Form22 frm2 = new Form22();
                     frm2.Show();
@@ -206,6 +205,21 @@ namespace WindowsFormsApp1
                     this.Hide();
                 }
             }
+        }
+
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
+
+            textBox1.Text = dataGridView1[0, row].Value.ToString();
+            comboBox1.Text = dataGridView1[1, row].Value.ToString();
+            textBox4.Text = dataGridView1[2, row].Value.ToString();
+            textBox6.Text= dataGridView1[3, row].Value.ToString();
+            textBox5.Text = dataGridView1[4, row].Value.ToString();
+            textBox3.Text = dataGridView1[5, row].Value.ToString();
+            textBox7.Text = dataGridView1[6, row].Value.ToString();
+            comboBox3.Text = dataGridView1[7, row].Value.ToString();
+
         }
     }
 }

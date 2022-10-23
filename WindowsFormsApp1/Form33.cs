@@ -20,6 +20,7 @@ namespace WindowsFormsApp1
         }
         private void Form33_Load(object sender, EventArgs e)
         {
+            
             DB db = new DB();
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -36,6 +37,7 @@ namespace WindowsFormsApp1
             
 
 
+
             db.closeConnection();
         }
 
@@ -43,33 +45,41 @@ namespace WindowsFormsApp1
         {
             //if (isUserExist())
             //    return;
-            DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate)", db.getConnection());
-
-          
-            command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
-            command.Parameters.Add("@size", MySqlDbType.Int32).Value = textBox2.Text;
-            command.Parameters.Add("@count", MySqlDbType.Int32).Value = textBox3.Text;
-            command.Parameters.Add("@discount", MySqlDbType.Float).Value = textBox4.Text;
-            command.Parameters.Add("@saleDate", MySqlDbType.Date).Value = dateTimePicker1.Value;
-            db.openConnection();
-            if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
+            if (label1.Text != "Нету")
             {
+                DB db = new DB();
+                MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate)", db.getConnection());
 
-                if (command.ExecuteNonQuery() == 1)
+
+                command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
+                command.Parameters.Add("@size", MySqlDbType.Int32).Value = textBox2.Text;
+                command.Parameters.Add("@count", MySqlDbType.Int32).Value = textBox3.Text;
+                command.Parameters.Add("@discount", MySqlDbType.Float).Value = textBox4.Text;
+                command.Parameters.Add("@saleDate", MySqlDbType.Date).Value = dateTimePicker1.Value;
+                db.openConnection();
+                if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
                 {
-                    MessageBox.Show("Продажа успешна добавлена", "Добавление");
-                    this.Hide();
-                    Form3 frm3 = new Form3();
-                    frm3.Show();
+
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Продажа успешна добавлена", "Добавление");
+                        this.Hide();
+                        Form3 frm3 = new Form3();
+                        frm3.Show();
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("Продажа не добавлено", "Добавление");
+                }
+
+
+                db.closeConnection();
             }
             else
             {
-                MessageBox.Show("Продажа не добавлено", "Добавление");
+                MessageBox.Show("Обуви нету", "Ошибка");
             }
-
-            db.closeConnection();
         }
 
         //public Boolean isUserExist()
@@ -117,16 +127,17 @@ namespace WindowsFormsApp1
 
                     if (command.ExecuteNonQuery() == 1)
                     {
-                        MessageBox.Show("Продажа успешно удалена", "Добавление");
+                        MessageBox.Show("Продажа успешно удалена", "Удаление");
                         this.Hide();
                         Form3 frm3 = new Form3();
                         frm3.Show();
                     }
+                    else
+                    {
+                        MessageBox.Show("Продажа не удалена", "Удаление");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Продажа не удалена", "Добавление");
-                }
+                
 
                 db.closeConnection();
             }
@@ -177,7 +188,7 @@ namespace WindowsFormsApp1
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
-
+            int column = Convert.ToInt32(dataGridView1.CurrentCell.ColumnIndex.ToString());
 
             comboBox1.Text = dataGridView1[1, row].Value.ToString();
             //comboBox2.Text = dataGridView1[1, row].Value.ToString();
@@ -185,6 +196,19 @@ namespace WindowsFormsApp1
             textBox3.Text = dataGridView1[3, row].Value.ToString();
             textBox4.Text = dataGridView1[4, row].Value.ToString();
             dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
+
+            DB db = new DB();
+            DataTable table1 = new DataTable();
+            MySqlDataAdapter adapter1 = new MySqlDataAdapter();
+            MySqlCommand command1 = new MySqlCommand("SELECT * FROM goods", db.getConnection());
+
+            adapter1.SelectCommand = command1;
+            adapter1.Fill(table1);
+            if (table1.Rows.Count > 0)
+            {
+                label1.Text = table1.Rows[column][7].ToString();
+
+            }
         }
     }
 }
