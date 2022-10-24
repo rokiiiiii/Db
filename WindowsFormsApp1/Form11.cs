@@ -48,7 +48,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                MessageBox.Show("Произошла ошибку", "Ошибка");
+                MessageBox.Show("Произошла ошибка", "Ошибка");
             }
             db.closeConnection();
         }
@@ -72,7 +72,7 @@ namespace WindowsFormsApp1
             {
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    MessageBox.Show("Обувь успешна добавлена", "Добавление");
+                    MessageBox.Show("Категория успешна добавлена", "Добавление");
                     this.Hide();
                     Form1 frm1 = new Form1();
                     frm1.Show();
@@ -80,7 +80,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                MessageBox.Show("Обувь не добавлена", "Добавление");
+                MessageBox.Show("Категория не добавлена", "Добавление");
             }
 
             db.closeConnection();
@@ -103,7 +103,7 @@ namespace WindowsFormsApp1
 
             if (table.Rows.Count > 0)
             {
-                MessageBox.Show("Такая обувь уже есть", "Ошибка");
+                MessageBox.Show("Такая категория уже есть", "Ошибка");
                 return true;
             }
             else
@@ -189,31 +189,12 @@ namespace WindowsFormsApp1
             this.Hide();
             frm22.Show();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            Form33 frm33 = new Form33();
+            this.Hide();
+            frm33.Show();
+        }
     }
-
-
-
-
-
-
-
-    //private void label8_Click(object sender, EventArgs e)
-    //{
-    //    Form2 frm2 = new Form2();
-    //    this.Hide();
-    //    frm2.Show();
-    //}
-
-    //private void label7_Click(object sender, EventArgs e)
-    //{
-    //    Form3 frm3 = new Form3();
-    //    this.Hide();
-    //    frm3.Show();
-    //}
-
-
-
-
-
-
 }

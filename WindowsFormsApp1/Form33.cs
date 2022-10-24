@@ -24,7 +24,7 @@ namespace WindowsFormsApp1
             DB db = new DB();
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand("SELECT * FROM sales", db.getConnection());
+            MySqlCommand command = new MySqlCommand("SELECT goodsName,size,count,discount,saleDate,dostyp FROM sales", db.getConnection());
             adapter.SelectCommand = command;
             adapter.Fill(table);
             dataGridView1.DataSource = table;
@@ -34,8 +34,15 @@ namespace WindowsFormsApp1
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            
-
+            DataTable table1 = new DataTable();
+            MySqlDataAdapter adapter1 = new MySqlDataAdapter();
+            MySqlCommand command1 = new MySqlCommand("SELECT * FROM goods", db.getConnection());
+            adapter1.SelectCommand = command1;
+            adapter1.Fill(table1);
+            comboBox2.DataSource = table1;
+            comboBox2.DisplayMember = "dostyp";
+            comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
 
 
             db.closeConnection();
@@ -43,12 +50,12 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (isUserExist())
-            //    return;
-            if (label1.Text != "Нету")
+            if (isUserExist())
+                return;
+            if (comboBox2.Text != "Нету" && comboBox2.SelectedIndex != -1)
             {
                 DB db = new DB();
-                MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate)", db.getConnection());
+                MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`,`dostyp`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate,@dostyp)", db.getConnection());
 
 
                 command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
@@ -56,8 +63,9 @@ namespace WindowsFormsApp1
                 command.Parameters.Add("@count", MySqlDbType.Int32).Value = textBox3.Text;
                 command.Parameters.Add("@discount", MySqlDbType.Float).Value = textBox4.Text;
                 command.Parameters.Add("@saleDate", MySqlDbType.Date).Value = dateTimePicker1.Value;
+                command.Parameters.Add("dostyp", MySqlDbType.VarChar).Value = comboBox2.Text;
                 db.openConnection();
-                if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
+                if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && comboBox2.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
                 {
 
                     if (command.ExecuteNonQuery() == 1)
@@ -82,30 +90,30 @@ namespace WindowsFormsApp1
             }
         }
 
-        //public Boolean isUserExist()
-        //{
-        //    DB db = new DB();
+        public Boolean isUserExist()
+        {
+            DB db = new DB();
 
-        //    DataTable table = new DataTable();
-        //    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-
-        //    MySqlCommand command = new MySqlCommand("SELECT * FROM `sales` WHERE `goodsId` = @goodsId ", db.getConnection());
-        //    //command.Parameters.Add("@goodsId", MySqlDbType.VarChar).Value = c.Text;
-
-        //    adapter.SelectCommand = command;
-        //    adapter.Fill(table);
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
 
 
-        //    if (table.Rows.Count > 0)
-        //    {
-        //        MessageBox.Show("Такое лекарство уже есть", "Ошибка");
-        //        return true;
-        //    }
-        //    else
-        //        return false;
+            MySqlCommand command = new MySqlCommand("SELECT * FROM `sales` WHERE `goodsName` = @goodsName ", db.getConnection());
+            command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
 
-        //}
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+
+
+            if (table.Rows.Count > 0)
+            {
+                MessageBox.Show("Такая продажа уже есть", "Ошибка");
+                return true;
+            }
+            else
+                return false;
+
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -154,11 +162,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+  
         private void label3_Click(object sender, EventArgs e)
         {
             Form11 frm11 = new Form11();
@@ -180,10 +184,7 @@ namespace WindowsFormsApp1
             frm3.Show();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -196,19 +197,7 @@ namespace WindowsFormsApp1
             textBox3.Text = dataGridView1[3, row].Value.ToString();
             textBox4.Text = dataGridView1[4, row].Value.ToString();
             dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
-
-            DB db = new DB();
-            DataTable table1 = new DataTable();
-            MySqlDataAdapter adapter1 = new MySqlDataAdapter();
-            MySqlCommand command1 = new MySqlCommand("SELECT * FROM goods", db.getConnection());
-
-            adapter1.SelectCommand = command1;
-            adapter1.Fill(table1);
-            if (table1.Rows.Count > 0)
-            {
-                label1.Text = table1.Rows[column][7].ToString();
-
-            }
+            comboBox2.Text = dataGridView1[6, row].Value.ToString();
         }
     }
 }

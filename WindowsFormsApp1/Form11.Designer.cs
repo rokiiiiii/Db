@@ -212,6 +212,7 @@
             this.label5.Size = new System.Drawing.Size(53, 55);
             this.label5.TabIndex = 52;
             this.label5.Text = "<";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 

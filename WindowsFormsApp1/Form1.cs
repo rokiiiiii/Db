@@ -47,13 +47,6 @@ namespace WindowsFormsApp1
             frm11.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-
-
         private void label8_Click(object sender, EventArgs e)
         {
             Form2 frm2 = new Form2();
@@ -73,43 +66,6 @@ namespace WindowsFormsApp1
             int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
             pictureBox1.Image = Image.FromFile(dataGridView1[4, row].Value.ToString());
 
-        }
-        //public Boolean isUserExist()
-        //{
-        //    DB db = new DB();
-
-        //    DataTable table = new DataTable();
-        //    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-
-        //    MySqlCommand command = new MySqlCommand("SELECT * FROM `shoeСategories` WHERE `categoryName` = @categoryName ", db.getConnection());
-        //    command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = textBox1.Text;
-
-        //    adapter.SelectCommand = command;
-        //    adapter.Fill(table);
-
-
-        //    if (table.Rows.Count > 0)
-        //    {
-        //        MessageBox.Show("Такая обувь уже есть", "Ошибка");
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-
-        //}
-
-
-
-        private void textBox2_KeyPress_1(object sender, KeyPressEventArgs e)
-        {
-
-            char number = e.KeyChar;
-
-            if (!Char.IsDigit(number)&& number!=8)
-            {
-                e.Handled = true;
-            }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
