@@ -14,10 +14,8 @@ dostyp varchar(50) check (dostyp="Есть" or dostyp="Нету")
 );
 
 create table goods(
-#goodsId int primary key NOT NULL AUTO_INCREMENT,
 goodsName varchar(50) primary key,
 categoryName varchar(50) references shoeCategories(categoryName) on update cascade on delete cascade,
-#categoryId int ,
 producer varchar(50),
 material varchar(50),
 color varchar(50),
@@ -33,7 +31,8 @@ goodsName varchar(50) references goods(goodsName) on update cascade on delete ca
 size int,
 count int,
 discount int,
-saleDate datetime
+saleDate datetime,
+dostyp varchar(50) check(dostyp="Есть" or dostyp="Нету") references goods(dostyp) on delete cascade on update cascade 
 );
 
 insert into shoeСategories(categoryName,guaranteePeriod,careRules,imgPath,imgName,dostyp) values
@@ -44,13 +43,13 @@ select * from shoeСategories;
                                    
 insert into goods(goodsName, categoryName,producer,material,color,price,quantityInStock,dostyp) values
 						( 'Обувь1','Кате1',  'Производитель1', 'Материал1', 'Синий', '100', '10',"Есть"),
-                        ( 'Обувь4', 'Категория2',  'Производитель4', 'Материал4', 'Белый', '100', '20',"Есть"),
+                        ( 'Обувь4', 'Категория2',  'Производитель4', 'Материал4', 'Белый', '100', '20',"Нету"),
                         ( 'Обувь3', 'Категория3',  'Производитель3', 'Материал3', 'Чёрный', '50', '201',"Есть");
 select * from goods;
                        
-insert into sales(goodsName,size,count,discount,saleDate) values
-						(  'Обувь1', '31', '1' , '10', '2022-04-12 '),
-						(  'Обувь4', '40', '1' , '0', '2022-05-14'),
-                        ( 'Обувь3', '40', '11' , '0', '2022-05-28');
+insert into sales(goodsName,size,count,discount,saleDate,dostyp) values
+						(  'Обувь1', '31', '1' , '10', '2022-04-12', "Есть"),
+						(  'Обувь4', '40', '1' , '0', '2022-05-14',"Нету" ),
+                        ( 'Обувь3', '40', '11' , '0', '2022-05-28' , "Есть");
 					
 select * from sales;
