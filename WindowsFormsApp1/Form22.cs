@@ -152,10 +152,14 @@ namespace WindowsFormsApp1
                     Form22 frm2 = new Form22();
                     frm2.Show();
                 }
+                else
+                {
+                    MessageBox.Show("Обувь не добавлена", "Ошибка");
+                }
             }
             else
             {
-                MessageBox.Show("Обувь не добавлена", "Добавление");
+                MessageBox.Show("Обувь не добавлена", "Ошибка");
             }
 
             db.closeConnection();

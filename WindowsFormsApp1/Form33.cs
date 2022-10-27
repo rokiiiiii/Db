@@ -52,7 +52,7 @@ namespace WindowsFormsApp1
         {
             if (isUserExist())
                 return;
-            if (comboBox2.Text != "Нету" && comboBox2.SelectedIndex != -1)
+            if (comboBox2.SelectedIndex != -1)
             {
                 DB db = new DB();
                 MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`,`dostyp`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate,@dostyp)", db.getConnection());
@@ -198,6 +198,11 @@ namespace WindowsFormsApp1
             textBox4.Text = dataGridView1[4, row].Value.ToString();
             dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
             comboBox2.Text = dataGridView1[6, row].Value.ToString();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
