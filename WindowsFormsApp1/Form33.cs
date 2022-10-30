@@ -28,13 +28,18 @@ namespace WindowsFormsApp1
             adapter.SelectCommand = command;
             adapter.Fill(table);
             dataGridView1.DataSource = table;
-            comboBox1.DataSource = table;
+
+
+            DataTable table3 = new DataTable();
+            MySqlDataAdapter adapter3= new MySqlDataAdapter();
+            MySqlCommand command3 = new MySqlCommand("SELECT * FROM goods", db.getConnection());
+            adapter3.SelectCommand = command3;
+            adapter3.Fill(table3);
+            comboBox1.DataSource = table3;
             comboBox1.DisplayMember = "goodsName";
             comboBox1.SelectedIndex = -1;
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-
 
             DataTable table2 = new DataTable();
             MySqlDataAdapter adapter2 = new MySqlDataAdapter();
