@@ -72,5 +72,12 @@ namespace WindowsFormsApp1
         {
             Application.ExitThread();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form44 frm44 = new Form44();
+            this.Hide();
+            frm44.Show();
+        }
     }
 }

@@ -46,8 +46,30 @@ insert into goods values
 select * from goods;
                        
 insert into sales(goodsName,categoryName,size,count,discount,saleDate) values
-						(  'Обувь1','Кате1', '31', '1' , '10', '2022-04-12'),
-						
-                        ( 'Обувь3','Категория3', '40', '11' , '0', '2022-05-28');
+						(  'Обувь1','Кате1', '31', '1' , '10', '2022-04-12'),	
+				
+                        ( 'Обувь3','Категория3', '40', '11' , '0', curdate());
+                        
 					
 select * from sales;
+
+#1
+select goods.price,(goods.price-sales.discount) from goods inner join sales on goods.categoryName=sales.categoryName;
+#2
+select goodsName,producer,material,color,price from goods where price>50;
+#3
+select goods.goodsName,goods.producer,goods.material,goods.color,goods.price, max(quantityInStock) from goods;
+#4
+select goods.goodsName,goods.price,sales.saleDate from goods inner join sales on goods.categoryName=sales.categoryName where sales.saleDate=curdate() and goods.price<51;
+#5
+select shoeСategories.*, goods.price,avg(goods.price) from shoeСategories inner join goods on shoeСategories.categoryName=goods.categoryName group by shoeСategories.categoryName having avg(goods.price)<51;
+#6
+select sum(goods.price) from goods inner join sales on goods.goodsName=sales.goodsName where month(saleDate)=month(curdate());
+#7
+select sum(goods.price),sales.saleDate from goods inner join sales on goods.goodsName=sales.goodsName group by sales.saleDate;
+#8 
+select sales.saleId,count(sales.saleId),goods.categoryName from goods inner join sales on goods.goodsName=sales.goodsName group by sales.goodsName;
+#9
+select goodsName from goods where goodsName not in (select goodsName from sales);
+#10
+select shoeСategories.categoryName,sales.goodsName,avg(sales.discount) from shoeСategories inner join sales on shoeСategories.categoryName=sales.categoryName group by shoeСategories.categoryName;
