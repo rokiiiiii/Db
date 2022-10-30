@@ -37,7 +37,7 @@ namespace WindowsFormsApp1
             DB db = new DB();
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand("SELECT goodsName,size,count,discount,saleDate,dostyp FROM sales", db.getConnection());
+            MySqlCommand command = new MySqlCommand("SELECT goodsName,categoryName,size,count,discount,saleDate FROM sales", db.getConnection());
             adapter.SelectCommand = command;
             adapter.Fill(table);
             dataGridView1.DataSource = table;

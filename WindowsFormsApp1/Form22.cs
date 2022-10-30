@@ -131,7 +131,7 @@ namespace WindowsFormsApp1
             //    return;
         
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `goods` ( `goodsName`,`categoryName`,,`producer`,`material`,`color`,`price`,`quantityInStock`,`dostyp`) VALUES (@goodsName,@categoryName,@categoryId,@producer,@material,@color,@price,@quantityInStock,@dostyp)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `goods` ( `goodsName`,`categoryName`,`producer`,`material`,`color`,`price`,`quantityInStock`,`dostyp`) VALUES (@goodsName,@categoryName,@producer,@material,@color,@price,@quantityInStock,@dostyp)", db.getConnection());
 
             command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = textBox1.Text;
             command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = comboBox1.Text;

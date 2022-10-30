@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
     class DB
     {
 
-        MySqlConnection connection = new MySqlConnection("server=localhost;user=root;password=root;database=shoos");
+        MySqlConnection connection = new MySqlConnection("server=localhost;user=root;password=root;database=shoos1");
 
         public void openConnection()
         {

@@ -24,7 +24,7 @@ namespace WindowsFormsApp1
             DB db = new DB();
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand("SELECT goodsName,size,count,discount,saleDate,dostyp FROM sales", db.getConnection());
+            MySqlCommand command = new MySqlCommand("SELECT goodsName,categoryName,size,count,discount,saleDate FROM sales", db.getConnection());
             adapter.SelectCommand = command;
             adapter.Fill(table);
             dataGridView1.DataSource = table;
@@ -34,17 +34,17 @@ namespace WindowsFormsApp1
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            DataTable table1 = new DataTable();
-            MySqlDataAdapter adapter1 = new MySqlDataAdapter();
-            MySqlCommand command1 = new MySqlCommand("SELECT * FROM goods", db.getConnection());
-            adapter1.SelectCommand = command1;
-            adapter1.Fill(table1);
-            comboBox2.DataSource = table1;
-            comboBox2.DisplayMember = "dostyp";
-            comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
 
 
+            DataTable table2 = new DataTable();
+            MySqlDataAdapter adapter2 = new MySqlDataAdapter();
+            MySqlCommand command2 = new MySqlCommand("SELECT * FROM shoeСategories", db.getConnection());
+            adapter2.SelectCommand = command2;
+            adapter2.Fill(table2);
+            comboBox3.DataSource = table2;
+            comboBox3.DisplayMember = "categoryName";
+            comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
             db.closeConnection();
         }
 
@@ -52,20 +52,31 @@ namespace WindowsFormsApp1
         {
             if (isUserExist())
                 return;
-            if (comboBox2.SelectedIndex != -1)
+
+
+            DB db = new DB();
+            MySqlCommand select = new MySqlCommand("select dostyp from goods where goodsName=@goodsName", db.getConnection());
+            MySqlDataAdapter adapter1 = new MySqlDataAdapter();
+            select.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
+            DataTable table1 = new DataTable();
+            adapter1.SelectCommand = select;
+            adapter1.Fill(table1);
+            dataGridView2.DataSource = table1;
+            if (Convert.ToBoolean(dataGridView2.Rows[0].Cells[0].Value.ToString())==true)
             {
-                DB db = new DB();
-                MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`size`,`count`,`discount`,`saleDate`,`dostyp`) VALUES (@goodsId,@goodsName,@size,@count,@discount,@saleDate,@dostyp)", db.getConnection());
+               
+                MySqlCommand command = new MySqlCommand("INSERT INTO `sales` (`goodsName`,`categoryName`,`size`,`count`,`discount`,`saleDate`) VALUES (@goodsName,@categoryName,@size,@count,@discount,@saleDate)", db.getConnection());
 
 
                 command.Parameters.Add("@goodsName", MySqlDbType.VarChar).Value = comboBox1.Text;
+                command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = comboBox3.Text;
                 command.Parameters.Add("@size", MySqlDbType.Int32).Value = textBox2.Text;
                 command.Parameters.Add("@count", MySqlDbType.Int32).Value = textBox3.Text;
                 command.Parameters.Add("@discount", MySqlDbType.Float).Value = textBox4.Text;
                 command.Parameters.Add("@saleDate", MySqlDbType.Date).Value = dateTimePicker1.Value;
-                command.Parameters.Add("dostyp", MySqlDbType.VarChar).Value = comboBox2.Text;
                 db.openConnection();
-                if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && comboBox2.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
+
+                if (comboBox1.Text != " " && comboBox1.SelectedIndex != -1 && comboBox3.SelectedIndex != -1 && textBox2.Text != " " && textBox3.Text != " " && textBox4.Text != " ")
                 {
 
                     if (command.ExecuteNonQuery() == 1)
@@ -78,16 +89,17 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    MessageBox.Show("Продажа не добавлено", "Добавление");
+                    MessageBox.Show("Продажа не добавлена", "Добавление");
                 }
-
-
-                db.closeConnection();
             }
             else
             {
-                MessageBox.Show("Обуви нету", "Ошибка");
+                MessageBox.Show("Обувь не доступна", "Добавление");
             }
+
+            db.closeConnection();
+            
+        
         }
 
         public Boolean isUserExist()
@@ -197,10 +209,9 @@ namespace WindowsFormsApp1
             textBox3.Text = dataGridView1[3, row].Value.ToString();
             textBox4.Text = dataGridView1[4, row].Value.ToString();
             dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
-            comboBox2.Text = dataGridView1[6, row].Value.ToString();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
