@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WindowsFormsApp1
 {
@@ -143,6 +146,52 @@ namespace WindowsFormsApp1
             adapter.SelectCommand = command;
             adapter.Fill(table);
             dataGridView1.DataSource = table;
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            DB db = new DB();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand command = new MySqlCommand("select * from sales where saleDate=curdate()", db.getConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            dataGridView1.DataSource = table;
+            Excel.Application exApp = new Excel.Application();
+
+            exApp.Workbooks.Add();
+            Excel.Worksheet wsh = (Excel.Worksheet)exApp.ActiveSheet;
+            int i, j;
+            for (i = 0; i <= dataGridView1.RowCount - 1; i++)
+            {
+                for (j = 0; j <= dataGridView1.ColumnCount - 1; j++)
+                {
+                    wsh.Cells[i + 1, j + 1] = dataGridView1[j, i].Value.ToString();
+                }
+            }
+            exApp.Visible = true;
+            dataGridView1.DataSource = "";
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            DB db = new DB();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand command = new MySqlCommand("select count(goodsName) from sales group by saleDate;", db.getConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            dataGridView1.DataSource = table;
+            int y;
+            string t;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)//построение сплайна
+            {
+                int x = Convert.ToInt32(dataGridView1.Rows[i].Cells[0].Value);//отображение сплайна на графике
+                chart1.Series[0].Points.AddXY(i, x);
+            }
+            chart1.ChartAreas[0].AxisX.Title = "Обувь";
+            chart1.Name = "Обувь";
+            dataGridView1.DataSource="";
         }
     }
 }
