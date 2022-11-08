@@ -193,5 +193,38 @@ namespace WindowsFormsApp1
             chart1.Name = "Обувь";
             dataGridView1.DataSource="";
         }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+          
+
+            int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
+            int sum = Convert.ToInt32(dataGridView1[7, row].Value.ToString());
+            string name = Convert.ToString(dataGridView1[1, row].Value.ToString());
+            var date = Convert.ToDateTime(dataGridView1[6, row].Value.ToString());
+
+            richTextBox1.Text = $"Вы купили {name}\n На сумму { sum}\n Дата-{date}";
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            DB db = new DB();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand command = new MySqlCommand("select sales.*, goods.price from sales inner join goods on sales.goodsName=goods.goodsName", db.getConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            dataGridView1.DataSource = table;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

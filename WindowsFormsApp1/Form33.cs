@@ -213,7 +213,7 @@ namespace WindowsFormsApp1
             textBox2.Text = dataGridView1[2, row].Value.ToString();
             textBox3.Text = dataGridView1[3, row].Value.ToString();
             textBox4.Text = dataGridView1[4, row].Value.ToString();
-            dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
+                dateTimePicker1.Text = dataGridView1[5, row].Value.ToString();
         }
 
         private void label1_Click(object sender, EventArgs e)

@@ -47,7 +47,7 @@ select * from goods;
                        
 insert into sales(goodsName,categoryName,size,count,discount,saleDate) values
 						(  'Обувь1','Кате1', '31', '1' , '10', '2022-04-12'),	
-				
+						 ( 'Обувь3','Категория3', '40', '11' , '0', curdate()),
                         ( 'Обувь3','Категория3', '40', '11' , '0', curdate());
                         
 					
@@ -73,3 +73,5 @@ select sales.saleId,count(sales.saleId),goods.categoryName from goods inner join
 select goodsName from goods where goodsName not in (select goodsName from sales);
 #10
 select shoeСategories.categoryName,sales.goodsName,avg(sales.discount) from shoeСategories inner join sales on shoeСategories.categoryName=sales.categoryName group by shoeСategories.categoryName;
+
+select sales.*, goods.price from sales inner join goods on sales.goodsName=goods.goodsName;

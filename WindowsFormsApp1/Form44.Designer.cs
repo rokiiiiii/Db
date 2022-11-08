@@ -47,6 +47,8 @@
             this.button12 = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button13 = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button14 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
@@ -162,6 +164,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(347, 169);
             this.dataGridView1.TabIndex = 10;
+            this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseClick);
             // 
             // textBox1
             // 
@@ -230,13 +233,35 @@
             this.button13.TabIndex = 15;
             this.button13.Text = "Экспорт в Word ";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(802, 15);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(262, 356);
+            this.richTextBox1.TabIndex = 16;
+            this.richTextBox1.Text = "Вы купили {shoos} \nНа сумму {sum}";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(211, 204);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(106, 51);
+            this.button14.TabIndex = 17;
+            this.button14.Text = "Создать чек";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // Form44
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.ClientSize = new System.Drawing.Size(800, 506);
+            this.ClientSize = new System.Drawing.Size(1204, 506);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.button12);
@@ -282,5 +307,7 @@
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button14;
     }
 }

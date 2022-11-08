@@ -259,3 +259,4 @@ C:\Users\Professional\Desktop\Db-main\WindowsFormsApp1\obj\Debug\WindowsFormsApp
 C:\Users\Professional\Desktop\Db-main\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Professional\Desktop\Db-main\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\Professional\Desktop\DB\Db\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form44.resources
+\\server\UserData$\1194943\Desktop\Db-main\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form44.resources
