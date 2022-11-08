@@ -191,19 +191,19 @@ namespace WindowsFormsApp1
             }
             chart1.ChartAreas[0].AxisX.Title = "Обувь";
             chart1.Name = "Обувь";
-            dataGridView1.DataSource="";
+            dataGridView1.DataSource = "";
         }
 
         private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
-          
+
 
             int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
             int sum = Convert.ToInt32(dataGridView1[7, row].Value.ToString());
             string name = Convert.ToString(dataGridView1[1, row].Value.ToString());
             var date = Convert.ToDateTime(dataGridView1[6, row].Value.ToString());
 
-            richTextBox1.Text = $"Вы купили {name}\n На сумму { sum}\n Дата-{date}";
+            richTextBox1.Text = $"Вы купили {name}\nНа сумму {sum}\nДата-{date}";
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -222,9 +222,27 @@ namespace WindowsFormsApp1
             dataGridView1.DataSource = table;
         }
 
-        private void button13_Click(object sender, EventArgs e)
+        private void replace(string stub, string text, Word.Document wordDocument)
         {
-
+            var range = wordDocument.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: stub, ReplaceWith: text);
+ 
         }
+    private void button13_Click(object sender, EventArgs e)
+    {
+        int row = Convert.ToInt32(dataGridView1.CurrentCell.RowIndex.ToString());
+        int sum = Convert.ToInt32(dataGridView1[7, row].Value.ToString());
+        string name = Convert.ToString(dataGridView1[1, row].Value.ToString());
+        var date = Convert.ToDateTime(dataGridView1[6, row].Value.ToString());
+        var wordApp = new Word.Application();
+        wordApp.Visible = false;
+        var wordDocument = wordApp.Documents.Open("C:\\Users\\Professional\\Desktop\\DB\\Db\\WindowsFormsApp1\\bin\\Debug\\Шаблон.docx");
+        replace("{name}", name, wordDocument);
+        replace("{sum}", sum.ToString(), wordDocument);
+        replace("{date}", date.ToString(), wordDocument);
+        wordDocument.SaveAs(@"Вывод.docx");
+        wordApp.Visible = true;
     }
+}
 }
